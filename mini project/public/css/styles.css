@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+.severity-badge {
+    @apply px-2 py-1 rounded text-sm font-medium;
+}
+.severity-badge.high {
+    @apply bg-red-100 text-red-800;
+}
+.severity-badge.medium {
+    @apply bg-orange-100 text-orange-800;
+}
+.severity-badge.low {
+    @apply bg-green-100 text-green-800;
+}
+.btn-info {
+    @apply bg-blue-600 text-white border-none px-3 py-2 rounded cursor-pointer;
+}
+.btn-info:hover {
+    @apply bg-blue-700;
+} 

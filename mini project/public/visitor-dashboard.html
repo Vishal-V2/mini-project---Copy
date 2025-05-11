@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Dashboard - Prison Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <h1 class="text-xl font-bold text-gray-800">Prison Management System</h1>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button id="logoutBtn" class="ml-4 px-4 py-2 text-sm text-white bg-red-600 rounded-md hover:bg-red-700">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Book Visit Card -->
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="p-5">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-calendar-plus text-3xl text-blue-600"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                        Book a Visit
+                                    </dt>
+                                    <dd class="text-sm text-gray-900">
+                                        Schedule a visit with an inmate
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-5 py-3">
+                        <div class="text-sm">
+                            <a href="/visit-booking.html" class="font-medium text-blue-600 hover:text-blue-500">
+                                Book now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visit History Card -->
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="p-5">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-history text-3xl text-green-600"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                        Visit History
+                                    </dt>
+                                    <dd class="text-sm text-gray-900">
+                                        View your past visits
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-5 py-3">
+                        <div class="text-sm">
+                            <a href="/visit-history.html" class="font-medium text-green-600 hover:text-green-500">
+                                View history
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Card -->
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="p-5">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-user text-3xl text-purple-600"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                        My Profile
+                                    </dt>
+                                    <dd class="text-sm text-gray-900">
+                                        Update your information
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-5 py-3">
+                        <div class="text-sm">
+                            <a href="/profile.html" class="font-medium text-purple-600 hover:text-purple-500">
+                                Edit profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Visits Section -->
+            <div class="mt-8">
+                <h2 class="text-lg font-medium text-gray-900">Upcoming Visits</h2>
+                <div class="mt-4 bg-white shadow overflow-hidden sm:rounded-md">
+                    <ul id="upcomingVisits" class="divide-y divide-gray-200">
+                        <li class="px-6 py-4">
+                            <p class="text-sm text-gray-500">Loading visits...</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const token = localStorage.getItem('token');
+        const userType = localStorage.getItem('userType');
+
+        if (!token || userType !== 'visitor') {
+            window.location.href = '/login.html';
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userType');
+            window.location.href = '/login.html';
+        });
+
+        // Fetch upcoming visits
+        async function fetchUpcomingVisits() {
+            try {
+                const response = await fetch('/api/visitor/dashboard', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const visitsList = document.getElementById('upcomingVisits');
+                    
+                    if (data.upcomingVisits && data.upcomingVisits.length > 0) {
+                        visitsList.innerHTML = data.upcomingVisits.map(visit => `
+                            <li class="px-6 py-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900">${visit.prisonerName}</p>
+                                        <p class="text-sm text-gray-500">${new Date(visit.visitDate).toLocaleDateString()} at ${visit.visitTime}</p>
+                                    </div>
+                                    <div class="text-sm text-gray-500">
+                                        ${visit.status}
+                                    </div>
+                                </div>
+                            </li>
+                        `).join('');
+                    } else {
+                        visitsList.innerHTML = `
+                            <li class="px-6 py-4">
+                                <p class="text-sm text-gray-500">No upcoming visits scheduled</p>
+                            </li>
+                        `;
+                    }
+                } else {
+                    console.error('Failed to fetch upcoming visits');
+                }
+            } catch (error) {
+                console.error('Error fetching upcoming visits:', error);
+            }
+        }
+
+        // Fetch data when page loads
+        fetchUpcomingVisits();
+    </script>
+</body>
+</html> 

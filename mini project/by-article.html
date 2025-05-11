@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Crimes by Article - Prison Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              prison: {
+                blue: "#1e3a8a",
+                dark: "#0f172a",
+                light: "#e2e8f0",
+                accent: "#3b82f6",
+              },
+            },
+          },
+        },
+      };
+    </script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-prison-dark">
+                <div class="flex items-center h-16 px-4 bg-prison-blue">
+                    <div class="flex items-center">
+                        <i class="fas fa-shield-alt text-white mr-2"></i>
+                        <span class="text-white font-semibold text-lg">PrisonMS</span>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
+                    <div class="px-4 mb-4">
+                        <div class="relative">
+                            <input
+                              type="text"
+                              class="w-full bg-prison-blue text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-prison-accent"
+                              placeholder="Search..."
+                            />
+                            <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <nav class="flex-1 px-2 space-y-1">
+                        <!-- Dashboard -->
+                        <a href="index.html" class="flex items-center px-4 py-3 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                            <i class="fas fa-tachometer-alt mr-3"></i>
+                            Dashboard
+                        </a>
+                        
+                        <!-- Prisons -->
+                        <a href="prisons.html" class="flex items-center px-4 py-3 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                            <i class="fas fa-building mr-3"></i>
+                            Prisons
+                        </a>
+                        
+                        <!-- Prisoners -->
+                        <div class="space-y-1">
+                            <button
+                              type="button"
+                              class="flex items-center w-full px-4 py-3 text-sm font-medium text-left text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group"
+                              aria-controls="sub-menu-prisoners"
+                              data-collapse-toggle="sub-menu-prisoners"
+                            >
+                              <i class="fas fa-user-lock mr-3"></i>
+                              Prisoners
+                              <i class="fas fa-chevron-down ml-auto transition-transform duration-200"></i>
+                            </button>
+                            <div id="sub-menu-prisoners" class="hidden space-y-1 pl-4">
+                              <a href="prisoners.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-list mr-3"></i>
+                                All Prisoners
+                              </a>
+                              <a href="add-prisoner.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-plus-circle mr-3"></i>
+                                Add New
+                              </a>
+                              <a href="release-schedule.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-calendar-alt mr-3"></i>
+                                Release Schedule
+                              </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Staff -->
+                        <div class="space-y-1">
+                            <button
+                              type="button"
+                              class="flex items-center w-full px-4 py-3 text-sm font-medium text-left text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group"
+                              aria-controls="sub-menu-staff"
+                              data-collapse-toggle="sub-menu-staff"
+                            >
+                              <i class="fas fa-users mr-3"></i>
+                              Staff
+                              <i class="fas fa-chevron-down ml-auto transition-transform duration-200"></i>
+                            </button>
+                            <div id="sub-menu-staff" class="hidden space-y-1 pl-4">
+                              <a href="staff.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-list mr-3"></i>
+                                All Staff
+                              </a>
+                              <a href="add-staff.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-user-plus mr-3"></i>
+                                Add Staff
+                              </a>
+                              <a href="shifts-schedules.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-calendar-check mr-3"></i>
+                                Shifts & Schedules
+                              </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Punishments -->
+                        <div class="space-y-1">
+                            <button
+                              type="button"
+                              class="flex items-center w-full px-4 py-3 text-sm font-medium text-left text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group"
+                              aria-controls="sub-menu-punishments"
+                              data-collapse-toggle="sub-menu-punishments"
+                            >
+                              <i class="fas fa-gavel mr-3"></i>
+                              Punishments
+                              <i class="fas fa-chevron-down ml-auto transition-transform duration-200"></i>
+                            </button>
+                            <div id="sub-menu-punishments" class="hidden space-y-1 pl-4">
+                              <a href="by-article.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-book mr-3"></i>
+                                By Article
+                              </a>
+                              <a href="punishment-log.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-history mr-3"></i>
+                                Punishment Log
+                              </a>
+                              <a href="statistics.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-chart-bar mr-3"></i>
+                                Statistics
+                              </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Visitors -->
+                        <div class="space-y-1">
+                            <button
+                              type="button"
+                              class="flex items-center w-full px-4 py-3 text-sm font-medium text-left text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group"
+                              aria-controls="sub-menu-visitors"
+                              data-collapse-toggle="sub-menu-visitors"
+                            >
+                              <i class="fas fa-user-friends mr-3"></i>
+                              Visitors
+                              <i class="fas fa-chevron-down ml-auto transition-transform duration-200"></i>
+                            </button>
+                            <div id="sub-menu-visitors" class="hidden space-y-1 pl-4">
+                              <a href="visit-booking.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-calendar-plus mr-3"></i>
+                                Visit Booking
+                              </a>
+                              <a href="visit-log.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-list mr-3"></i>
+                                Visit Log
+                              </a>
+                              <a href="visitor-approval.html" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:bg-prison-blue hover:text-white rounded-md group">
+                                <i class="fas fa-user-shield mr-3"></i>
+                                Visitor Approval
+                              </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                <div class="px-4 py-4 border-t border-gray-700">
+                    <div class="flex items-center">
+                        <img
+                          class="w-10 h-10 rounded-full"
+                          src="https://randomuser.me/api/portraits/men/32.jpg"
+                          alt="User profile"
+                        />
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-white">Admin User</p>
+                            <p class="text-xs font-medium text-gray-400">Super Admin</p>
+                        </div>
+                        <button class="ml-auto text-gray-400 hover:text-white">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile sidebar -->
+        <div class="md:hidden fixed inset-0 z-40" id="mobile-sidebar" style="display: none;">
+            <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
+            <div class="relative flex flex-col w-72 max-w-xs h-full bg-prison-dark">
+                <div class="absolute top-0 right-0 -mr-12 pt-2">
+                    <button
+                      type="button"
+                      class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    >
+                      <span class="sr-only">Close sidebar</span>
+                      <i class="fas fa-times text-white"></i>
+                    </button>
+                </div>
+                <div class="flex items-center h-16 px-4 bg-prison-blue">
+                    <div class="flex items-center">
+                        <i class="fas fa-shield-alt text-white mr-2"></i>
+                        <span class="text-white font-semibold text-lg">PrisonMS</span>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
+                    <div class="px-4 mb-4">
+                        <div class="relative">
+                            <input
+                              type="text"
+                              class="w-full bg-prison-blue text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-prison-accent"
+                              placeholder="Search..."
+                            />
+                            <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <nav class="flex-1 px-2 space-y-1">
+                        <!-- Simplified mobile menu items would go here -->
+                        <!-- Similar structure as desktop sidebar but adapted for mobile -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top navigation -->
+            <div class="flex items-center justify-between h-16 px-4 bg-white border-b border-gray-200">
+                <div class="flex items-center">
+                    <button class="md:hidden text-gray-500 focus:outline-none" id="mobile-menu-button">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="ml-3 text-xl font-semibold text-gray-900">Crimes by Article</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-prison-blue">
+                        <i class="fas fa-file-export mr-2"></i>Export List
+                    </button>
+                    <button class="p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-prison-accent">
+                        <span class="sr-only">View notifications</span>
+                        <i class="fas fa-bell"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main content area -->
+            <div class="flex-1 overflow-auto p-4">
+                <!-- Filters -->
+                <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center space-x-4">
+                        <select class="rounded-md border-gray-300 shadow-sm focus:border-prison-blue focus:ring-prison-blue">
+                            <option>All Categories</option>
+                            <option>Violent Crimes</option>
+                            <option>Property Crimes</option>
+                            <option>White Collar Crimes</option>
+                            <option>Drug Related</option>
+                            <option>Cyber Crimes</option>
+                        </select>
+                        <select class="rounded-md border-gray-300 shadow-sm focus:border-prison-blue focus:ring-prison-blue">
+                            <option>All Sentences</option>
+                            <option>Life Imprisonment</option>
+                            <option>10+ Years</option>
+                            <option>5-10 Years</option>
+                            <option>1-5 Years</option>
+                            <option>Less than 1 Year</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <input type="text" class="rounded-md border-gray-300 shadow-sm focus:border-prison-blue focus:ring-prison-blue pl-10" placeholder="Search crimes...">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crimes Table -->
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IPC Article</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Crime</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Punishment</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <!-- Murder -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 302</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Murder</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Intentional killing of a person</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Death Penalty or Life Imprisonment</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Violent Crime</td>
+                                </tr>
+
+                                <!-- Rape -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 376</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rape</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Non-consensual sexual intercourse</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">10 Years to Life Imprisonment</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Violent Crime</td>
+                                </tr>
+
+                                <!-- Theft -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 379</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Theft</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Dishonestly taking property without consent</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">3 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Property Crime</td>
+                                </tr>
+
+                                <!-- Fraud -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 420</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Cheating and Fraud</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Dishonest inducement to deliver property</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">7 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">White Collar Crime</td>
+                                </tr>
+
+                                <!-- Drug Trafficking -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">NDPS Act</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Drug Trafficking</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Commercial quantity of drugs</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">10-20 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Drug Related</td>
+                                </tr>
+
+                                <!-- Cyber Crime -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IT Act 66</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Cyber Fraud</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Computer-related offenses</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">3 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Cyber Crime</td>
+                                </tr>
+
+                                <!-- Assault -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 323</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Assault</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Voluntarily causing hurt</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">1 Year + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Violent Crime</td>
+                                </tr>
+
+                                <!-- Corruption -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">PC Act 7</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Corruption</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Public servant taking gratification</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">3-7 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">White Collar Crime</td>
+                                </tr>
+
+                                <!-- Kidnapping -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 363</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Kidnapping</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Kidnapping from lawful guardianship</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">7 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Violent Crime</td>
+                                </tr>
+
+                                <!-- Robbery -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 392</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Robbery</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Theft with violence or threat</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">10 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Property Crime</td>
+                                </tr>
+
+                                <!-- Forgery -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 467</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Forgery</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Forging valuable security or will</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Life Imprisonment + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">White Collar Crime</td>
+                                </tr>
+
+                                <!-- Extortion -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 384</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Extortion</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Putting person in fear of injury</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">3 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Property Crime</td>
+                                </tr>
+
+                                <!-- Criminal Breach of Trust -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 409</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Criminal Breach of Trust</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Public servant's breach of trust</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Life Imprisonment + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">White Collar Crime</td>
+                                </tr>
+
+                                <!-- Attempt to Murder -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 307</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Attempt to Murder</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Attempting to commit murder</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">10 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Violent Crime</td>
+                                </tr>
+
+                                <!-- Criminal Conspiracy -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 120B</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Criminal Conspiracy</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Agreement to commit an offense</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Same as main offense</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">General Crime</td>
+                                </tr>
+
+                                <!-- Identity Theft -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IT Act 66C</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Identity Theft</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Using electronic signature fraudulently</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">3 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Cyber Crime</td>
+                                </tr>
+
+                                <!-- Money Laundering -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">PMLA 3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Money Laundering</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Concealing proceeds of crime</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">3-7 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">White Collar Crime</td>
+                                </tr>
+
+                                <!-- Sexual Harassment -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 354A</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Sexual Harassment</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Physical contact with sexual intent</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">3 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Violent Crime</td>
+                                </tr>
+
+                                <!-- Human Trafficking -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">IPC 370</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Human Trafficking</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Buying or disposing of any person</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">7-10 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Violent Crime</td>
+                                </tr>
+
+                                <!-- Environmental Crime -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">EPA 15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Environmental Violation</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">Violation of environmental laws</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">5 Years + Fine</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Environmental Crime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Legend -->
+                <div class="mt-4 flex items-center space-x-4 text-sm">
+                    <div class="flex items-center">
+                        <span class="w-3 h-3 rounded-full bg-red-100 mr-2"></span>
+                        <span class="text-gray-600">Severe Punishment (7+ Years)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="w-3 h-3 rounded-full bg-yellow-100 mr-2"></span>
+                        <span class="text-gray-600">Moderate Punishment (1-7 Years)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById("mobile-menu-button").addEventListener("click", function () {
+            document.getElementById("mobile-sidebar").style.display = "block";
+        });
+
+        // Collapsible menu functionality
+        document.querySelectorAll("[data-collapse-toggle]").forEach((button) => {
+            button.addEventListener("click", function () {
+                const targetId = this.getAttribute("aria-controls");
+                const target = document.getElementById(targetId);
+                const icon = this.querySelector("i.fa-chevron-down");
+
+                target.classList.toggle("hidden");
+                icon.classList.toggle("transform");
+                icon.classList.toggle("rotate-180");
+            });
+        });
+    </script>
+</body>
+</html>

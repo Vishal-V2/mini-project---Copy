@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Prison Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-lg">
+        <div class="text-center">
+            <h2 class="text-3xl font-bold text-gray-900">Welcome Back</h2>
+            <p class="mt-2 text-gray-600">Please sign in to continue</p>
+        </div>
+
+        <!-- Login Type Selection -->
+        <div class="flex justify-center space-x-4 mb-8">
+            <button id="adminTab" class="px-4 py-2 rounded-md bg-blue-600 text-white">Admin Login</button>
+            <button id="visitorTab" class="px-4 py-2 rounded-md bg-gray-200 text-gray-700">Visitor Login</button>
+        </div>
+
+        <!-- Admin Login Form -->
+        <form id="adminForm" class="space-y-6">
+            <div>
+                <label for="adminId" class="block text-sm font-medium text-gray-700">Admin ID</label>
+                <input type="text" id="adminId" name="adminId" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+                <label for="adminPassword" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="adminPassword" name="password" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+                <button type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Sign in as Admin
+                </button>
+            </div>
+        </form>
+
+        <!-- Visitor Login Form -->
+        <form id="visitorForm" class="space-y-6 hidden">
+            <div>
+                <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" required pattern="[0-9]{10}"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+                <label for="aadhaarNumber" class="block text-sm font-medium text-gray-700">Aadhaar Number</label>
+                <input type="text" id="aadhaarNumber" name="aadhaarNumber" required pattern="[0-9]{12}"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+                <label for="otp" class="block text-sm font-medium text-gray-700">OTP</label>
+                <div class="flex space-x-2">
+                    <input type="text" id="otp" name="otp" required pattern="[0-9]{6}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <button type="button" id="sendOtpBtn"
+                        class="mt-1 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Send OTP
+                    </button>
+                </div>
+            </div>
+            <div>
+                <button type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Sign in as Visitor
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="/js/login.js"></script>
+</body>
+</html> 
